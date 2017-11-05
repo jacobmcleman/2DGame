@@ -1,7 +1,5 @@
 #include "Window.h"
 
-//GLEW
-#define GLEW_STATIC
 #include <glad\glad.h>
 
 //GLFW
@@ -12,14 +10,16 @@
 #include <string>
 #include <functional>
 
+#include "InputHandler.h"
+
 Window::Window(const std::string& title, CursorMode cursor, int width, int height) :
     width_(width), height_(height), lastFrameTime_(0)
 {
-  glfwInit(); //glErrorCheck();
-  glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4); //glErrorCheck();
-  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3); //glErrorCheck();
-  glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); //glErrorCheck();
-  glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);//glErrorCheck();
+  glfwInit();
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+  glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); 
+  glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
   window_ = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
 
@@ -48,6 +48,9 @@ Window::Window(const std::string& title, CursorMode cursor, int width, int heigh
   }
 
   glEnable(GL_DEPTH_TEST);
+
+  glfwSetKeyCallback(window_, InputHandler::KeyCallback);
+  glfwSetCursorPosCallback(window_, InputHandler::MouseCallback);
 }
 
 Window::~Window()
