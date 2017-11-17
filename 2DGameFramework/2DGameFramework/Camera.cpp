@@ -2,6 +2,11 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 
+Camera::Camera(glm::vec2 pos, float rot) :
+  GameObject("Camera", pos, rot, glm::vec2(1, 1), 0)
+{
+}
+
 const glm::mat4 Camera::GetMatrix()
 {
   return camMatrix_;
